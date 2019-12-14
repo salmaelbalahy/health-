@@ -7,6 +7,8 @@ import android.app.Service;
 import android.content.Context;
 import android.os.Build;
 
+import com.iscoapps.healthapp.DataBase.SharedPreferencesManager;
+import com.iscoapps.healthapp.MyApplication;
 import com.iscoapps.healthapp.R;
 
 import java.util.Locale;
@@ -39,6 +41,7 @@ public class NotificationsManager implements MonitorListener {
         createNotificationChannel();
     }
 
+
     @Override
     public void onConnectionStateUpdate(int newState) {
         connectionState = newState;
@@ -50,6 +53,7 @@ public class NotificationsManager implements MonitorListener {
         this.heartRate = heartRate;
         updateMonitorNotification();
 
+        SharedPreferencesManager.setIntValue(MyApplication.getContext(),"HeartRate",heartRate);
         if (!HealthChecker.isHeartRateNormal(heartRate)) {
             alert(ABNORMAL_HEART_RATE);
         }
@@ -166,4 +170,5 @@ public class NotificationsManager implements MonitorListener {
 
         return builder.build();
     }
+
 }

@@ -4,9 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.iscoapps.healthapp.DataBase.SharedPreferencesManager;
+import com.iscoapps.healthapp.MyApplication;
 import com.iscoapps.healthapp.R;
 
 import java.text.ParseException;
@@ -24,7 +27,7 @@ public class AdviceActivity extends AppCompatActivity {
     Long age;
 
 
-    Double heart = 50d;
+    int heart;
 
 
     @Override
@@ -42,6 +45,13 @@ public class AdviceActivity extends AppCompatActivity {
         handleAdvice();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        heart = SharedPreferencesManager.getIntValue(MyApplication.getContext(),"HeartRate");
+        Toast.makeText(this,"Your Heart Rate = "+heart,Toast.LENGTH_LONG).show();
+
+    }
 
     private long calculteAge(Context context)
     {
